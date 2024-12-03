@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSP Violation Reports</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #reports { 
+            max-height: 500px; 
+            overflow-y: scroll; 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+        }
+        .report { 
+            background-color: #f4f4f4; 
+            margin-bottom: 10px; 
+            padding: 10px; 
+            border-radius: 5px; 
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .report-timestamp {
+            color: #666;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>CSP Violation Reports</h1>
+    <div id="reports"></div>
+
+    <script>
+        const socket = io();
+        const reportsContainer = document.getElementById('reports');
+
+        // Handle initial reports when connecting
+        socket.on('initial_reports', (reports) => {
+            reports.forEach(addReportToPage);
+        });
+
+        // Handle new incoming reports
+        socket.on('new_report', (report) => {
+            addReportToPage(report);
+        });
+
+        function addReportToPage(report) {
+            const reportElement = document.createElement('div');
+            reportElement.classList.add('report');
+
+            // Add timestamp
+            const timestampElement = document.createElement('div');
+            timestampElement.classList.add('report-timestamp');
+            timestampElement.textContent = new Date().toISOString();
+            reportElement.appendChild(timestampElement);
+
+            // Display the entire report as a formatted JSON string
+            const reportTextElement = document.createElement('pre');
+            reportTextElement.textContent = JSON.stringify(report, null, 2);
+            reportElement.appendChild(reportTextElement);
+
+            reportsContainer.prepend(reportElement);
+        }
+    </script>
+</body>
+</html>
