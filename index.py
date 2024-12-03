@@ -40,4 +40,4 @@ def handle_connect():
     emit('initial_reports', csp_reports)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, host='0.0.0.0', port=5000, debug=True)
