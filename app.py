@@ -1,5 +1,5 @@
 import flask
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import json
@@ -33,6 +33,11 @@ def handle_csp_report():
 @app.route('/show')
 def show_reports():
     return render_template('reports.html')
+
+@app.route('/clear')
+def clear_violations():
+    csp_reports = []
+    return redirect("/show")
 
 @socketio.on('connect')
 def handle_connect():
