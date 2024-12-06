@@ -34,11 +34,11 @@ def handle_csp_report():
 def show_reports():
     return render_template('reports.html')
 
-# @app.route('/clear')
-# def clear_violations():
-#     global csp_reports
-#     csp_reports.clear()
-#     return redirect("/show")
+@app.route('/clear')
+def clear_violations():
+    global csp_reports
+    csp_reports.clear()
+    return redirect("/show")
 
 @socketio.on('connect')
 def handle_connect():
