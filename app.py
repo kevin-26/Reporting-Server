@@ -36,7 +36,8 @@ def show_reports():
 
 @app.route('/clear')
 def clear_violations():
-    csp_reports = []
+    global csp_reports
+    csp_reports.clear()
     return redirect("/show")
 
 @socketio.on('connect')
