@@ -52,7 +52,7 @@ def webhook():
         return "", 204
 
     else:
-        return button_events
+        return jsonify(button_events)
 
 
 @socketio.on("connect")
