@@ -48,8 +48,9 @@ def clear_violations():
 @app.route("/button-webhook", methods=["POST", "GET"])
 def webhook():
     if request.method == "POST":
-        button_events[len(button_events) + 1] = request.json
-        return "", 204
+        event_id = len(button_events) + 1
+        button_events[event_id] = request.json
+        return jsonify({"received": True, "event_id": event_id}), 200
 
     else:
         return jsonify(button_events)
