@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 CORS(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 
 # Global list to store recent reports (in-memory solution)
 csp_reports = []
